@@ -5,6 +5,15 @@ export default class Aluno extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
+  @column()
+  public name: string
+
+  @column()
+  public matricula: string
+
+  @column()
+  public ativo: boolean
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
