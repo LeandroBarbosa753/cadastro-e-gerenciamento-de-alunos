@@ -14,6 +14,9 @@ export default class Aluno extends BaseModel {
   @column()
   public ativo: boolean
 
+  @column()
+  admId: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

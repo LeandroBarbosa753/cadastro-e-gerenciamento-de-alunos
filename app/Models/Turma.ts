@@ -10,8 +10,12 @@ export default class Turma extends BaseModel {
   @column()
   public name: string
 
+  @column()
+  admId: number
+  
   @hasMany(() => Aluno)
   public alunos: HasMany<typeof Aluno>
+
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
