@@ -1,5 +1,5 @@
+import { BaseModel, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany, HasMany} from '@ioc:Adonis/Lucid/Orm'
 import Aluno from './Aluno'
 
 
@@ -12,7 +12,7 @@ export default class Turma extends BaseModel {
 
   @column()
   admId: number
-  
+
   @hasMany(() => Aluno)
   public alunos: HasMany<typeof Aluno>
 
