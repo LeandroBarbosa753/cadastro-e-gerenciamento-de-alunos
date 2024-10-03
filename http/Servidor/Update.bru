@@ -1,0 +1,19 @@
+meta {
+  name: Update
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:3333/adm/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "name":"Leandro",
+      "email":"barbosa21@gmail.com",
+      "password":"123456"
+  }
+}

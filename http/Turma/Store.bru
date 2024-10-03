@@ -1,0 +1,21 @@
+meta {
+  name: Store
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3333/turma
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: NA.QbLbincaF5KDWI-Bxgi_uVnVNBC5m2A76JS1OTNTm0W8pXXwXMWyQ0c_ZfiL
+}
+
+body:json {
+  {
+      "name":"Sistemas para Internet 2023.1"
+  }
+}

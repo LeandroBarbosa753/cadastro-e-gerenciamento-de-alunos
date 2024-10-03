@@ -1,0 +1,23 @@
+meta {
+  name: Update
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:3333/turma/
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: NA.QbLbincaF5KDWI-Bxgi_uVnVNBC5m2A76JS1OTNTm0W8pXXwXMWyQ0c_ZfiL
+}
+
+body:json {
+  {
+      "name":"Leandro",
+      "email":"barbosa21@gmail.com",
+      "password":"123456"
+  }
+}
