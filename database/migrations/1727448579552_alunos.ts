@@ -9,8 +9,12 @@ export default class extends BaseSchema {
       table.string('name').notNullable()
       table.string('matricula').notNullable().unique()
       table.boolean('ativo').notNullable().defaultTo(true)
+      table.bigInteger('adm_id').unsigned().references('id').inTable('adms').onDelete('SET NULL').onUpdate('CASCADE')
+      table.string('turma_name').unsigned().references('name').inTable('turmas').onDelete('SET NULL').onUpdate('CASCADE')
       table.bigInteger('turma_id').unsigned().references('id').inTable('turmas').onDelete('SET NULL').onUpdate('CASCADE')
-      table.bigInteger('admId').unsigned().references('id').inTable('adms').onDelete('SET NULL').onUpdate('CASCADE')
+
+
+
 
 
       /**
