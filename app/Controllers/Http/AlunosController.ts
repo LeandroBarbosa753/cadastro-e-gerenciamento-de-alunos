@@ -3,20 +3,20 @@ import Aluno from 'App/Models/Aluno'
 export default class AlunosController {
     public async index({ auth }: HttpContextContract) {
         const adm = await auth.authenticate()
-        const alunos = await Aluno.query().where('admId', adm.id)
+        const alunos = await Aluno.query().where('adm_id', adm.id)
         return alunos
     }
 
     public async store({ request, auth }: HttpContextContract) {
         const adm = await auth.authenticate()
-        const {name, matricula} = request.only(['name', 'matricula'])
-        const alunoReturn = (await adm).related('alunos').create({ name, matricula })
+        const { name, matricula, turma_name } = request.only(['name', 'matricula', 'turma_name'])
+        const alunoReturn = (await adm).related('alunos').create({ name, matricula, turma_name })
         return alunoReturn
     }
 
-    public async show({ response, auth, params }: HttpContextContract) {
+
+    public async show({ response, params }: HttpContextContract) {
         try {
-            //const adm = await auth.authenticate()
             const aluno = await Aluno.findByOrFail("id", params.id)
             return aluno
         } catch (error) {

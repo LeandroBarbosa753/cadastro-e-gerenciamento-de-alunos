@@ -3,7 +3,7 @@ import Turma from 'App/Models/Turma'
 export default class TurmasController {
     public async index({ auth }: HttpContextContract) {
         const adm = await auth.authenticate()
-        const turmas = await Turma.query().where('admId', adm.id)
+        const turmas = await Turma.query().where('adm_id', adm.id)
         return turmas
     }
 
