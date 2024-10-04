@@ -28,9 +28,9 @@ export default class AlunosController {
 
     public async update({ request, response, params }: HttpContextContract) {
         try {
-            const { ativo } = request.only(['ativo'])
+            const { ativo, turma_name } = request.only(['ativo', 'turma_name'])
             const aluno = await Aluno.findByOrFail("id", params.id)
-            aluno.merge({ ativo })
+            aluno.merge({ ativo, turma_name })
             await aluno.save()
             return aluno
         } catch (error) {

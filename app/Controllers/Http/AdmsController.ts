@@ -1,6 +1,8 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Adm from 'App/Models/Adm'
 export default class AdmsController {
+
+
   public async index({ }: HttpContextContract) {
     const adms = await Adm.query().preload('turmas').preload('alunos')
     return adms
