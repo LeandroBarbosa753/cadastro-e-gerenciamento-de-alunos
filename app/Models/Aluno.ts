@@ -21,9 +21,6 @@ export default class Aluno extends BaseModel {
   @column()
   turma_name: string
 
-  @column()
-  turmaId: number
-
   @belongsTo(() => Turma)
   public turma: BelongsTo<typeof Turma>
 
