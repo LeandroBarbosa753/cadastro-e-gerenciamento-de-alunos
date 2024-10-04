@@ -10,10 +10,10 @@
 
 ### Descrição:
 
-- Cadastro de alunos (nome, matrícula, turma).
-- Edição e exclusão de cadastros.
-- Listagem de todos os alunos.
-- Consulta por nome ou matrícula.
+- 🧑‍🎓 Cadastro de alunos (nome, matrícula, turma).
+- 🗑️ Edição e exclusão de cadastros.
+- 📋 Listagem de todos os alunos.
+- 🔍 Consulta por nome ou matrícula.
 
 ## 🛠️ Tecnologias e Ferramentas Utilizadas
 
