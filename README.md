@@ -1,19 +1,39 @@
-# cadastro-e-gerenciamento-de-alunos
+# 🧑‍🎓 Projeto cadastro e gerenciamento de alunos
+
+![Repository size](https://img.shields.io/github/repo-size/LeandroBarbosa753/cadastro-e-gerenciamento-de-alunos?color=blue) &nbsp;
+![Pull request](https://img.shields.io/static/v1?label=PR&message=welcome&color=green)&nbsp;
+[![Minimum node.js version](https://img.shields.io/badge/node-%3E%3D%2014.0.0-brightgreen)](https://nodejs.org)
 
 ## 🔍 Sobre o Projeto
 
 #### Este projeto foi desenvolvido com o objetivo de criar um sistema de cadastro e gerenciamento de alunos com ferramentas e tecnologias aprendidas na disciplina de Back-End.
 
 ### Descrição:
-   
+
 - Cadastro de alunos (nome, matrícula, turma).
--  Edição e exclusão de cadastros.
+- Edição e exclusão de cadastros.
 - Listagem de todos os alunos.
 - Consulta por nome ou matrícula.
-  
+
+## 🛠️ Tecnologias e Ferramentas Utilizadas
+
+<p align="center">
+ <a href="https://skillicons.dev">
+    <img src="https://raw.githubusercontent.com/devicons/devicon/ca28c779441053191ff11710fe24a9e6c23690d6/icons/adonisjs/adonisjs-original.svg" width="50" height="50" alt="AdonisJS" />
+    <a href="https://skillicons.dev/icons?i=nodejs"><img src="https://skillicons.dev/icons?i=nodejs" width="50" height="50" alt="Node.js" /></a>
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" width="50" height="50" alt="TypeScript" />
+    <a href="https://skillicons.dev/icons?i=npm"><img src="https://skillicons.dev/icons?i=npm" width="50" height="50" alt="npm" /></a>
+    <a href="https://skillicons.dev/icons?i=yarn"><img src="https://skillicons.dev/icons?i=yarn" width="50" height="50" alt="Yarn" /></a>
+     <img src="https://raw.githubusercontent.com/prettier/prettier-logo/e638a708b41a176a46cfbbf9d3ed4910132df265/images/prettier-icon-light.svg" width="50" height="50" alt="Prettier" />
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/eslint/eslint-original.svg" width="50" height="50" alt="ESLint" />
+    <a href="https://skillicons.dev/icons?i=docker"><img src="https://skillicons.dev/icons?i=docker" width="50" height="50" alt="Docker" /></a>
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg" width="50" height="50" alt="PostgreSQL" />
+    <img src="https://avatars.githubusercontent.com/u/114530840?v=4" width="50" height="50" alt="Usebruno" />
+    <img src="https://github.com/bush1D3v/navarro_blog_api/assets/133554156/de030e87-8f12-4b6b-8c75-071bab8526a5" width="50" height="50" alt=".env" />
+</a>
+</p>
 
 # 📦 Configuração do Ambiente de Desenvolvimento
-
 
 Primeiro, confira se o `node` está acima da versão 14:
 
@@ -122,7 +142,7 @@ Agora, replicar o modelo do banco de dados para a migration:
 
 ![modelo.png](modelo.png)
 
- É necessário criar uma migration para alunos, usando o comando:
+É necessário criar uma migration para alunos, usando o comando:
 
 ```bash
 node ace make:model Alunos -c -m
@@ -138,17 +158,22 @@ Poderia ter sido criado o model, o controller e a migration separadamente, mas c
 
 Depois, faça as alterações nos models `Adm.ts` , `Aluno.ts`e `Turma.ts` e faça o relacionamento entre as tabelas:
 
-Aluno: 
+Aluno:
+
 ```
   @belongsTo(() => Turma)
   public turma: BelongsTo<typeof Turma>
 ```
+
 Turma:
+
 ```
   @hasMany(() => Aluno)
   public alunos: HasMany<typeof Aluno>
 ```
+
 Adm:
+
 ```
  @hasMany(() => Aluno)
   public alunos: HasMany<typeof Aluno>
@@ -168,13 +193,13 @@ docker exec -it postgres sql -U postgres
 
 Use o comando para abrir a database:
 
-```sql
+```bash
 \c [NOME_DO_BANCO]
 ```
 
 Após entrar no banco, execute:
 
-```sql
+```bash
 \dt
 ```
 
@@ -186,10 +211,10 @@ Caso queira ver somente uma tabela, execute o comando:
 \d [NOME_DA_TABELA]
 ```
 
-## 🛠️ Criando Controller de User
+## 🛠️ Criando Controller de Adm
 
 ```bash
-node ace make:controller User -r
+node ace make:controller Adm -r
 ```
 
 Importação do Adm para o controller:
@@ -205,8 +230,6 @@ O Adm precisa ser autenticado para verificar as permissoes de alterações de da
 ```bash
 node ace make:controller Session -r
 ```
-
-
 
 ## 🚀 Criação das Rotas
 
@@ -224,7 +247,6 @@ Conseguimos criar as 5 rotas de uma vez só. Para visualizar as rotas, use o có
 node ace list:routes
 ```
 
-
 ## 🏃 Executando o Projeto
 
 Para rodar o projeto, utilize o comando:
@@ -233,4 +255,39 @@ Para rodar o projeto, utilize o comando:
 yarn dev
 ```
 
-## 🔒 Criando Middleware de Autenticação
+# 🔒 Criando Middleware de Autenticação
+
+Ao criar os métodos do `/aluno` e da `/turma`, vamos criar um `middleware` de autenticação. Vamos entrar no arquivo `start/kernel` e registrar o middleware no final:
+
+```typescript
+Server.middleware.registerNamed({
+  auth: () => import('App/Middleware/Auth'),
+})
+```
+
+Como é um resource, ele não consegue passar o ‘auth’ diretamente:
+
+```typescript
+Route.resource('/aluno', 'AlunosController').apiOnly()
+Route.resource('/turma', 'TurmasController').apiOnly() // não dá certo assim
+```
+
+Precisamos criar um grupo por fora:
+
+```typescript
+Route.group(() => {
+  Route.resource('/aluno', 'AlunosController').apiOnly()
+  Route.resource('/turma', 'TurmasController').apiOnly()
+}).middleware('auth')
+```
+
+## 🗝️ Criando Rotas de Autenticação
+
+```typescript
+Route.post('/session', 'SessionsController.store')
+Route.delete('/session', 'SessionsController.destroy').middleware('auth')
+```
+
+## 📚 Referência
+
+Para mais detalhes e guias sobre o AdonisJS, consulte a documentação oficial: [AdonisJS Documentation](https://v5-docs.adonisjs.com/guides/introduction).
